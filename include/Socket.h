@@ -1,41 +1,38 @@
 #pragma once
 #include <arpa/inet.h>
 
+class InetAddress {
+ private:
+  /* data */
+  struct sockaddr_in addr;
 
-class InetAddress
-{
-private:
-    /* data */
-    struct sockaddr_in addr;
-public:
-    InetAddress();
-    InetAddress(const char* _ip, uint16_t _port);
-    ~InetAddress();
+ public:
+  InetAddress();
+  InetAddress(const char* _ip, uint16_t _port);
+  ~InetAddress();
 
-    void setInetAddr(sockaddr_in _addr);
-    sockaddr_in getAddr();
-    char* getIp();
-    uint16_t getPort();
+  void setInetAddr(sockaddr_in _addr);
+  sockaddr_in getAddr();
+  char* getIp();
+  uint16_t getPort();
 };
 
+class Socket {
+ private:
+  /* data */
+  int fd;
 
-class Socket
-{
-private:
-    /* data */
-    int fd;
-public:
-    Socket(/* args */);
-    Socket(int _fd);
-    ~Socket();
+ public:
+  Socket(/* args */);
+  Socket(int _fd);
+  ~Socket();
 
-    void bind(InetAddress*);
-    void listen();
-    int accept(InetAddress*);
-    
-    void connect(InetAddress*);
+  void bind(InetAddress*);
+  void listen();
+  int accept(InetAddress*);
 
-    void setnonblocking();
-    int getFd();
+  void connect(InetAddress*);
+
+  void setnonblocking();
+  int getFd();
 };
-

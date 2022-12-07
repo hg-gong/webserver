@@ -3,18 +3,18 @@
 #include <vector>
 
 class Channel;
-class Epoll
-{
-private:
-    /* data */
-    int epfd;
-    struct epoll_event * events;
-public:
-    Epoll(/* args */);
-    ~Epoll();
+class Epoll {
+ private:
+  /* data */
+  int epfd;
+  struct epoll_event* events;
 
-    void updateChannel(Channel*);
-    void deleteChannel(Channel* );
+ public:
+  Epoll(/* args */);
+  ~Epoll();
 
-    std::vector<Channel*> pool(int timeout = -1);
+  void updateChannel(Channel*);
+  void deleteChannel(Channel*);
+
+  std::vector<Channel*> pool(int timeout = -1);
 };
