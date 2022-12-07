@@ -50,6 +50,8 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "typeinfo": "cpp",
-        "cerrno": "cpp"
+        "cerrno": "cpp",
+        "map": "cpp",
+        "cinttypes": "cpp"
     }
 }

@@ -15,6 +15,8 @@ aux_source_directory(${PROJECT_SOURCE_DIR}/src SRC)
 
 # Add the executable target
 add_executable(testThreadPool ${SRC} testThreadPool.cpp )
+add_executable(server ${SRC} server.cpp )
+add_executable(client ${SRC} client.cpp )
 
 # Add a custom target to run clang-format on the source files
 add_custom_target(
