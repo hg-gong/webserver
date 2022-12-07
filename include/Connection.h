@@ -10,7 +10,7 @@ class Connection {
   EventLoop *loop;
   Socket *sock;
   Channel *channel;
-  std::function<void(int)> deleteConnectionCallbacl;
+  std::function<void(int)> deleteConnectionCallback;
   Buffer *readBuffer;
 
  public:

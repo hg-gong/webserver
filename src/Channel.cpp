@@ -1,14 +1,14 @@
 #include "Channel.h"
 #include <sys/epoll.h>
 #include <unistd.h>
-#include "Eventloop.h"
+#include "EventLoop.h"
 #include "Socket.h"
 
-Channel::Channel(EventLoop* _loop, int - fd)
+Channel::Channel(EventLoop* _loop, int _fd)
     : loop(_loop), fd(_fd), events(0), ready(0), inEpoll(false) {}
 
 Channel::~Channel() {
-  int(fd != -1) {
+  if(fd != -1){
     close(fd);
     fd = -1;
   }

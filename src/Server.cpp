@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <functional>
 #include "Acceptor.h"
-#include "Connetion.h"
+#include "Connection.h"
 #include "EventLoop.h"
 #include "Socket.h"
 #include "ThreadPool.h"
@@ -15,7 +15,7 @@ Server::Server(EventLoop* _loop) : mainReactor(_loop), acceptor(nullptr) {
 
   int size = std::thread::hardware_concurrency();
   thpool = new ThreadPool(size);
-  for (int i = 0; i < size(); i++) {
+  for (int i = 0; i < size; i++) {
     subReactors.push_back(new EventLoop());
   }
 
@@ -33,12 +33,12 @@ Server::~Server() {
 
 void Server::newConnection(Socket* sock) {
   if (sock->getFd() != -1) {
-    int random = sock->getFd % subReactors.size();
+    int random = sock->getFd() % subReactors.size();
     Connection* conn = new Connection(subReactors[random], sock);
     std::function<void(int)> cb =
         std::bind(&Server::deleteConnetion, this, std::placeholders::_1);
     conn->setDeleteConnectionCallback(cb);
-    connnctions[sock->getFd()] = conn;
+    connections[sock->getFd()] = conn;
   }
 }
 

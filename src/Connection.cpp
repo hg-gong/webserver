@@ -24,21 +24,21 @@ Connection::~Connection() {
 }
 
 void Connection::setDeleteConnectionCallback(std::function<void(int)> _cb) {
-  deleteConnectionCallbacl = _cb;
+  deleteConnectionCallback = _cb;
 }
 
 void Connection::echo(int sockfd) {
   char buf[1024];
   while (true) {
     bzero(&buf, sizeof(buf));
-    ssize_t bytes_read = read(sockfd, buf, sizof(buf));
+    ssize_t bytes_read = read(sockfd, buf, sizeof(buf));
     if (bytes_read > 0) {
       readBuffer->append(buf, bytes_read);
     } else if (bytes_read == -1 && errno == EINTR) {
       printf("continue reading\n");
       continue;
-    } else if (byte_read == -1 &&
-               ((error == EAGAIN) | (error == EWOULDBLOCK))) {
+    } else if (bytes_read == -1 &&
+               ((errno == EAGAIN) | (errno== EWOULDBLOCK))) {
       printf("message from client fd %d : %s \n", sockfd, readBuffer->c_str());
       send(sockfd);
       readBuffer->clear();
