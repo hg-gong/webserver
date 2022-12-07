@@ -38,7 +38,7 @@ void Connection::echo(int sockfd) {
       printf("continue reading\n");
       continue;
     } else if (bytes_read == -1 &&
-               ((errno == EAGAIN) | (errno== EWOULDBLOCK))) {
+               ((errno == EAGAIN) | (errno == EWOULDBLOCK))) {
       printf("message from client fd %d : %s \n", sockfd, readBuffer->c_str());
       send(sockfd);
       readBuffer->clear();

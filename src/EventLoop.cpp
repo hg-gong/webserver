@@ -3,7 +3,7 @@
 #include "Channel.h"
 #include "Epoll.h"
 
-EventLoop::EventLoop():ep(nullptr), quit(false) { ep = new Epoll(); }
+EventLoop::EventLoop() : ep(nullptr), quit(false) { ep = new Epoll(); }
 
 EventLoop::~EventLoop() { delete ep; }
 
