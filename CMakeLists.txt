@@ -40,8 +40,8 @@ add_subdirectory(test)
 # Add a custom target to run clang-format on the source files
 add_custom_target(
   format
-  # COMMAND clang-format -i -style=file ${PROJECT_SOURCE_DIR}/*.cpp
   COMMAND clang-format -i -style=file ${PROJECT_SOURCE_DIR}/src/*.cpp
   COMMAND clang-format -i -style=file ${PROJECT_SOURCE_DIR}/src/include/*.h
+  COMMAND clang-format -i -style=file ${PROJECT_SOURCE_DIR}/test/*.cpp
   WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
 )
