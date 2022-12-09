@@ -1,5 +1,6 @@
 #pragma once
 #include <functional>
+#include "Macros.h"
 class Socket;
 class EventLoop;
 class Channel {
@@ -27,6 +28,6 @@ class Channel {
   void setInEpoll(bool _in = true);
   void useET();
 
-  void setReady(uint32_t);
+  void setReady(uint32_t ev);
   void setReadCallback(std::function<void()>);
 };

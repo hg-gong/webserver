@@ -105,3 +105,5 @@ void Socket::connect(InetAddress* _addr) {
 }
 
 int Socket::getFd() { return fd; }
+
+bool Socket::IsNonBlocking() { return (fcntl(fd, F_GETFL) & O_NONBLOCK) != 0; }

@@ -34,5 +34,6 @@ class Socket {
   void connect(InetAddress*);
 
   void setnonblocking();
+  bool IsNonBlocking();
   int getFd();
 };
