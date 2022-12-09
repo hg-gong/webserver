@@ -22,7 +22,7 @@ int main(int argc, char const *argv[]) {
       break;
     }
     pconn->Read();
-    std::cout << "Message from server" << pconn->ReadBuffer() << std::endl;
+    std::cout << "Message from server: " << pconn->ReadBuffer() << std::endl;
   }
   return 0;
 }
