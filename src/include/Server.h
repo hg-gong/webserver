@@ -1,4 +1,5 @@
 #pragma once
+#include <functional>
 #include <map>
 #include <vector>
 class EventLoop;
@@ -14,12 +15,13 @@ class Server {
   std::map<int, Connection*> connections;
   std::vector<EventLoop*> subReactors;
   ThreadPool* thpool;
+  std::function<void(Connection*)> on_connect_callback_;
 
  public:
   Server(EventLoop*);
   ~Server();
 
-  void handleReadEvent(int);
   void newConnection(Socket* sock);
-  void deleteConnetion(int sockfd);
+  void deleteConnetion(Socket* sock);
+  void OnConnect(std::function<void(Connection*)> fn);
 };
