@@ -37,21 +37,19 @@ class ThreadPool {
   ~ThreadPool();
 
   template <class F, class... Args>
-  auto add(F&& f, Args&&... args)
-      -> std::future<typename std::result_of<F(Args...)>::type>;
+  auto add(F &&f, Args &&... args) -> std::future<typename std::result_of<F(Args...)>::type>;
 };
 
 template <class F, class... Args>
-auto ThreadPool::add(F&& f, Args&&... args)
-    -> std::future<typename std::result_of<F(Args...)>::type> {
+auto ThreadPool::add(F &&f, Args &&... args) -> std::future<typename std::result_of<F(Args...)>::type> {
   // 定义函数或函数对象f的返回类型
   using return_type = typename std::result_of<F(Args...)>::type;
 
   // 使用std::make_shared创建一个std::packaged_task对象，该对象包装函数或函数对象f和它的参数args
   // 因为bind了，所以不需要填参数，所以packged_task中写的是<return_type()>
   // packaged_task包装过后的对象可以一部执行
-  auto task = std::make_shared<std::packaged_task<return_type()>>(
-      std::bind(std::forward<F>(f), std::forward<Args>(args)...));
+  auto task =
+      std::make_shared<std::packaged_task<return_type()>>(std::bind(std::forward<F>(f), std::forward<Args>(args)...));
 
   // 使用task->get_future()获取task的std::future对象
   std::future<return_type> res = task->get_future();

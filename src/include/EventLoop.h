@@ -6,7 +6,7 @@ class Channel;
 class EventLoop {
  private:
   /* data */
-  Epoll* ep;
+  Epoll *ep;
   bool quit;
 
  public:
@@ -14,7 +14,7 @@ class EventLoop {
   ~EventLoop();
 
   void loop();
-  void updateChannel(Channel*);
+  void updateChannel(Channel *);
 
   void addThread(std::function<void()>);
 };

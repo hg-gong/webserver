@@ -8,8 +8,7 @@
 #include "Socket.h"
 #include "util.h"
 
-Connection::Connection(EventLoop* _loop, Socket* _sock)
-    : loop(_loop), sock(_sock) {
+Connection::Connection(EventLoop *_loop, Socket *_sock) : loop(_loop), sock(_sock) {
   if (loop != nullptr) {
     channel = new Channel(loop, sock->getFd());
     channel->enableRead();
@@ -60,9 +59,7 @@ void Connection::ReadNonBlocking() {
       printf("continue reading\n");
       continue;
     } else if (bytes_read == -1 &&
-               ((errno == EAGAIN) |
-                (errno ==
-                 EWOULDBLOCK))) {  // 非阻塞IO，这个条件表示数据全部读取完
+               ((errno == EAGAIN) | (errno == EWOULDBLOCK))) {  // 非阻塞IO，这个条件表示数据全部读取完
       break;
     } else if (bytes_read == 0) {  // EOF,客户端断开链接
       printf("EOF, client fd %d disconnected\n", sockfd);
@@ -129,8 +126,7 @@ void Connection::ReadBlocking() {
 void Connection::WriteBlocking() {
   // 没有处理send_buffer_数据大于TCP写缓冲区，的情况，可能会有bug
   int sockfd = sock->getFd();
-  ssize_t bytes_write =
-      write(sockfd, send_buffer_->c_str(), send_buffer_->size());
+  ssize_t bytes_write = write(sockfd, send_buffer_->c_str(), send_buffer_->size());
   if (bytes_write == -1) {
     printf("Other error on blocking client fd %d\n", sockfd);
     state_ = State::Closed;
@@ -140,23 +136,21 @@ void Connection::WriteBlocking() {
 void Connection::Close() { deleteConnectionCallback(sock); }
 
 Connection::State Connection::GetState() { return state_; }
-void Connection::SetSendBuffer(const char* str) { send_buffer_->setBuf(str); }
-Buffer* Connection::GetReadBuffer() { return read_buffer_; }
-const char* Connection::ReadBuffer() { return read_buffer_->c_str(); }
-Buffer* Connection::GetSendBuffer() { return send_buffer_; }
-const char* Connection::SendBuffer() { return send_buffer_->c_str(); }
+void Connection::SetSendBuffer(const char *str) { send_buffer_->setBuf(str); }
+Buffer *Connection::GetReadBuffer() { return read_buffer_; }
+const char *Connection::ReadBuffer() { return read_buffer_->c_str(); }
+Buffer *Connection::GetSendBuffer() { return send_buffer_; }
+const char *Connection::SendBuffer() { return send_buffer_->c_str(); }
 
-void Connection::SetDeleteConnectionCallback(
-    std::function<void(Socket*)> callback) {
+void Connection::SetDeleteConnectionCallback(std::function<void(Socket *)> callback) {
   deleteConnectionCallback = callback;
 }
 
-void Connection::SetOnConnectCallback(
-    std::function<void(Connection*)> callback) {
+void Connection::SetOnConnectCallback(std::function<void(Connection *)> callback) {
   onConnectCallback = callback;
   channel->setReadCallback([this]() { onConnectCallback(this); });
 }
 
 void Connection::GetlineSendBuffer() { send_buffer_->getline(); }
 
-Socket* Connection::GetSocket() { return sock; }
+Socket *Connection::GetSocket() { return sock; }

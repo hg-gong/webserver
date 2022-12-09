@@ -10,18 +10,18 @@ class ThreadPool;
 class Server {
  private:
   /* data */
-  EventLoop* mainReactor;
-  Acceptor* acceptor;
-  std::map<int, Connection*> connections;
-  std::vector<EventLoop*> subReactors;
-  ThreadPool* thpool;
-  std::function<void(Connection*)> on_connect_callback_;
+  EventLoop *mainReactor;
+  Acceptor *acceptor;
+  std::map<int, Connection *> connections;
+  std::vector<EventLoop *> subReactors;
+  ThreadPool *thpool;
+  std::function<void(Connection *)> on_connect_callback_;
 
  public:
-  Server(EventLoop*);
+  Server(EventLoop *);
   ~Server();
 
-  void newConnection(Socket* sock);
-  void deleteConnetion(Socket* sock);
-  void OnConnect(std::function<void(Connection*)> fn);
+  void newConnection(Socket *sock);
+  void deleteConnetion(Socket *sock);
+  void OnConnect(std::function<void(Connection *)> fn);
 };

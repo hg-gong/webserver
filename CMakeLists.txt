@@ -12,6 +12,8 @@ set(SRC_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/src/include)
 set(TEST_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/test/include)
 include_directories(${SRC_INCLUDE_DIR} ${EST_INCLUDE_DIR})
 
+set(BUILD_SUPPORT_DIR ${PROJECT_SOURCE_DIR}/build_support)
+
 # Specify the source directory
 aux_source_directory(${PROJECT_SOURCE_DIR}/src SRC_CPP_FILES)
 aux_source_directory(${PROJECT_SOURCE_DIR}/test TEST_CPP_FILES)
@@ -43,5 +45,21 @@ add_custom_target(
   COMMAND clang-format -i -style=file ${PROJECT_SOURCE_DIR}/src/*.cpp
   COMMAND clang-format -i -style=file ${PROJECT_SOURCE_DIR}/src/include/*.h
   COMMAND clang-format -i -style=file ${PROJECT_SOURCE_DIR}/test/*.cpp
+  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+)
+
+add_custom_target(
+  clang-tidy
+  COMMAND clang-tidy  ${PROJECT_SOURCE_DIR}/src/*.cpp
+  COMMAND clang-tidy  ${PROJECT_SOURCE_DIR}/src/include/*.h
+  COMMAND clang-tidy  ${PROJECT_SOURCE_DIR}/test/*.cpp
+  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+)
+
+add_custom_target(
+  cpplint
+  COMMAND cpplint ${PROJECT_SOURCE_DIR}/src/*.cpp
+  COMMAND cpplint ${PROJECT_SOURCE_DIR}/src/include/*.h
+  COMMAND cpplint ${PROJECT_SOURCE_DIR}/test/*.cpp
   WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
 )

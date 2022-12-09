@@ -6,7 +6,7 @@ class EventLoop;
 class Channel {
  private:
   /* data */
-  EventLoop* loop;
+  EventLoop *loop;
   int fd;
   uint32_t events;
   uint32_t ready;
@@ -15,7 +15,7 @@ class Channel {
   std::function<void()> writeCallback;
 
  public:
-  Channel(EventLoop* _loop, int _fd);
+  Channel(EventLoop *_loop, int _fd);
   ~Channel();
 
   void handleEvent();

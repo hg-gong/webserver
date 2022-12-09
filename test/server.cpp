@@ -1,6 +1,7 @@
 #include "Server.h"
 #include <unistd.h>
 #include <functional>
+#include <iostream>
 #include <memory>
 #include "Acceptor.h"
 #include "Connection.h"
@@ -18,8 +19,7 @@ int main(int argc, char const *argv[]) {
       conn->Close();
       return;
     }
-    std::cout << "Message from client" << conn->GetSocket()->GetFd() << ": "
-              << conn->ReadBuffer() << std::endl;
+    std::cout << "Message from client" << conn->GetSocket()->getFd() << ": " << conn->ReadBuffer() << std::endl;
     conn->SetSendBuffer(conn->ReadBuffer());
     conn->Write();
   });
